@@ -1,0 +1,124 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FavProjects {
+  projectId: String!
+}
+
+type ParticipateProjects {
+  userId: String!
+  projectId: String!
+}
+
+type Task {
+  id: String!
+  titleTask: String!
+  infoTask: String
+  finishedTask: Boolean!
+}
+
+type Card {
+  id: String!
+  titleCard: String!
+  tasks: [Task!]!
+}
+
+type Project {
+  userId: String!
+  id: ID!
+  titleProject: String!
+  dataAcesso: DateTime!
+  participantes: [String!]!
+  cardTasks: [Card!]!
+  colorProject: String!
+  finishedProject: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  bannerColor: String
+  perfilColor: String
+  password: String!
+  projects: [Project!]!
+  favProjects: [FavProjects!]!
+  participateProjects: [ParticipateProjects!]!
+}
+
+type Query {
+  getUserByEmail(data: String!): User
+  getUsersById(users: [String!]!): [User!]!
+  getProject(userId: String!, projectId: String!): Project!
+  getParticipateProjects(userId: String!): [Project!]!
+  getHello: String!
+}
+
+type Mutation {
+  createUser(data: AutenticacaoUser!): User!
+  createUserNext(user: CreateUserNextInput!): User!
+  updateUser(id: String!, data: UpdateUserInput!): User!
+  deleteUser(data: String!): User!
+  userLogin(data: AutenticacaoUser!): User!
+  createProject(data: CreateProject!): Project!
+  updateFavProjects(userId: String!, projectId: UpdateFavProjects!): [FavProjects!]!
+  finishedProject(userId: String!, projectId: String!): Project!
+  deleteProject(userId: String!, projectId: String!): Project!
+  userLeaveProject(userId: String!, projectId: String!): Project!
+  sendConvite(email: String!, projectName: String!): String!
+  addNewCard(userId: String!, projectId: String!, card: CreateCardAndUpdate!): Card!
+  moveCard(userId: String!, projectId: String!, cardId: String!, position: Float!): Card!
+  deleteCard(userId: String!, projectId: String!, cardId: String!): Card!
+  createTask(userId: String!, projectId: String!, cardId: String!, task: CreateTask!): Task!
+  updateTask(userId: String!, projectId: String!, cardId: String!, taskId: String!, task: UpdateTask!): Task!
+}
+
+input AutenticacaoUser {
+  email: String!
+  username: String
+  password: String!
+}
+
+input CreateUserNextInput {
+  email: String!
+  username: String
+}
+
+input UpdateUserInput {
+  username: String
+  perfilColor: String
+  bannerColor: String
+}
+
+input CreateProject {
+  titleProject: String!
+  dataAcesso: DateTime!
+  userId: String!
+  participantes: [String!]!
+  colorProject: String!
+  finishedProject: Boolean!
+}
+
+input UpdateFavProjects {
+  projectId: String!
+}
+
+input CreateCardAndUpdate {
+  titleCard: String!
+}
+
+input CreateTask {
+  titleTask: String!
+}
+
+input UpdateTask {
+  titleTask: String
+  infoTask: String
+  finishedTask: Boolean
+}
