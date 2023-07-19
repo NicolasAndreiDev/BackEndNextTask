@@ -6,7 +6,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/user/dtos/schema/user.schema';
 import { Model } from 'mongoose';
 import { FavProjects } from '../dtos/entities/favProjects.entity';
-import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class ProjectService {
@@ -124,54 +123,5 @@ export class ProjectService {
     await user.save();
 
     return projectParticipantes;
-  }
-
-  async sendEmail(email: string, projectName: string) {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      auth: {
-        user: 'nexttask3@gmail.com',
-        pass: '',
-      },
-    });
-
-    const mailOptions = {
-      from: 'nexttask3@gmail.com',
-      to: email,
-      subject: 'Project invitation',
-      html: `
-        <div style='text-align: center'>
-          <img src="cid:logo" alt="Logo" />
-          <p style='color: #2d333a'>
-            You were invited to participate in project ${projectName},<br>
-            to join the project follow the link below<br>
-          </p>
-          <br>
-          <a href='http://localhost:3000/login' style='background-color: rgb(142, 78, 245); text-decoration: none; padding: 10px 20px; border-radius: 4px; color: white'>Enter the project</a>
-          <br>
-          <br>
-          <p style='color: #2d333a'>
-            NextTask projects help you put <br>
-            your plans into practice and reach your goals!
-          </p>
-        </div>
-      `,
-      attachments: [
-        {
-          filename: 'logo.png',
-          path: './logo.png',
-          cid: 'logo',
-        },
-      ],
-    };
-
-    try {
-      const info = await transporter.sendMail(mailOptions);
-      console.log('Email sent:', info.messageId);
-      return 'Email sent successfully!';
-    } catch (error) {
-      console.error('Error sending email:', error);
-      throw new Error('Failed to send email.');
-    }
   }
 }

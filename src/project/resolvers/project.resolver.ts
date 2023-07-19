@@ -58,12 +58,4 @@ export class ProjectResolver {
   ) {
     return this.projectService.leaveProject(userId, projectId);
   }
-
-  @Mutation(() => String)
-  async sendConvite(
-    @Args('email') email: string,
-    @Args('projectName') projectName: string,
-  ) {
-    return this.projectService.sendEmail(email, projectName);
-  }
 }

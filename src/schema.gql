@@ -54,10 +54,12 @@ type User {
 
 type Query {
   getUserByEmail(data: String!): User
-  getUsersById(users: [String!]!): [User!]!
+  getUsersByEmail(users: [String!]!): [User!]!
+  getUserById(userId: String!): User!
   getProject(userId: String!, projectId: String!): Project!
   getParticipateProjects(userId: String!): [Project!]!
   getHello: String!
+  hello: String!
 }
 
 type Mutation {
@@ -71,12 +73,12 @@ type Mutation {
   finishedProject(userId: String!, projectId: String!): Project!
   deleteProject(userId: String!, projectId: String!): Project!
   userLeaveProject(userId: String!, projectId: String!): Project!
-  sendConvite(email: String!, projectName: String!): String!
   addNewCard(userId: String!, projectId: String!, card: CreateCardAndUpdate!): Card!
   moveCard(userId: String!, projectId: String!, cardId: String!, position: Float!): Card!
   deleteCard(userId: String!, projectId: String!, cardId: String!): Card!
   createTask(userId: String!, projectId: String!, cardId: String!, task: CreateTask!): Task!
   updateTask(userId: String!, projectId: String!, cardId: String!, taskId: String!, task: UpdateTask!): Task!
+  sendConvite(convite: ConviteInput!): String!
 }
 
 input AutenticacaoUser {
@@ -121,4 +123,10 @@ input UpdateTask {
   titleTask: String
   infoTask: String
   finishedTask: Boolean
+}
+
+input ConviteInput {
+  userId: String!
+  projectId: String!
+  email: String!
 }

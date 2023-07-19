@@ -13,6 +13,9 @@ import { CardResolver } from './card/resolvers/card.resolver';
 import { TaskResolver } from './task/resolvers/task.resolver';
 import { TaskService } from './task/service/task.service';
 import { GetInfo } from './utils/common.utils';
+import { InvitationSchema } from './invitations/dtos/schema/invitation.schema';
+import { InvitationService } from './invitations/service/invitation.service';
+import { InvitationResolver } from './invitations/resolvers/invitation.resolver';
 
 @Module({
   imports: [
@@ -22,7 +25,10 @@ import { GetInfo } from './utils/common.utils';
       autoSchemaFile: { path: 'src/schema.gql' },
     }),
     MongooseModule.forRoot(process.env.MONGO_CONNECT),
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+      { name: 'Invitation', schema: InvitationSchema },
+    ]),
   ],
   controllers: [],
   providers: [
@@ -30,10 +36,12 @@ import { GetInfo } from './utils/common.utils';
     ProjectResolver,
     CardResolver,
     TaskResolver,
+    InvitationResolver,
     UserService,
     ProjectService,
     CardService,
     TaskService,
+    InvitationService,
     GetInfo,
   ],
 })

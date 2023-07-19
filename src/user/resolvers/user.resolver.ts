@@ -43,7 +43,14 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  async getUsersById(@Args('users', { type: () => [String] }) users: string[]) {
+  async getUsersByEmail(
+    @Args('users', { type: () => [String] }) users: string[],
+  ) {
     return this.userService.findAllUsers(users);
+  }
+
+  @Query(() => User)
+  async getUserById(@Args('userId') userId: string) {
+    return this.userService.findById(userId);
   }
 }
